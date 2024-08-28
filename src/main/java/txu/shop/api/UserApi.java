@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import txu.shop.entity.UserEntity;
 import txu.shop.service.UserSevice;
 
-@CrossOrigin(origins = "http://localhost:3000/", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor

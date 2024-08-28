@@ -15,19 +15,14 @@ import java.util.Date;
 @Setter
 @Table(name = "cart_item")
 public class CartItemEntity implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "IdOrGenerated")
-    @GenericGenerator(strategy = "org.hibernate.id.UUIDHexGenerator", name = "IdOrGenerated")
-    @Column(name = "id")
-    private String id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "IdOrGenerated")
+//    @GenericGenerator(strategy = "org.hibernate.id.UUIDHexGenerator", name = "IdOrGenerated")
+//    @Column(name = "id")
+//    private String id;
 
-    @ManyToOne
-    @JoinColumn(name = "productId")
-    private ProductEntity productEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private UserEntity userEntity;
+    @EmbeddedId
+    CartItemProfiles id;
 
 
     private Date createDatetime;

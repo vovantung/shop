@@ -42,14 +42,19 @@ public class ProductDao extends BaseDao<ProductEntity> {
 
         if (categories == null || categories.isEmpty()) {
             if (!StringUtils.isNullOrEmpty(keySearch)) {
+
                 queryString += " WHERE p.name LIKE '%" + keySearch + "%'";
+                queryString += " UNION SELECT p FROM ProductEntity AS p JOIN ProductCategoryEntity AS pc ON p.id = pc.id.productEntity.id";
+                queryString += " WHERE p.description LIKE '%" + keySearch + "%'";
             }
             query = getEntityManager().createQuery(queryString);
         } else {
-            queryString += " WHERE pc.categoryEntity.id in :categories";
+            queryString += " WHERE pc.id.categoryEntity.id in :categories";
             if (!StringUtils.isNullOrEmpty(keySearch)) {
                 queryString += " AND p.name LIKE '%" + keySearch + "%'";
-
+                queryString += " UNION SELECT p FROM ProductEntity AS p JOIN ProductCategoryEntity AS pc ON p.id = pc.id.productEntity.id";
+                queryString += " WHERE pc.id.categoryEntity.id in :categories";
+                queryString += " AND p.description LIKE '%" + keySearch + "%'";
             }
             query = getEntityManager().createQuery(queryString.toString());
             query.setParameter("categories", categories);

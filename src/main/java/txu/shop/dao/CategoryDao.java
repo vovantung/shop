@@ -38,6 +38,8 @@ public class CategoryDao extends BaseDao<CategoryEntity> {
     public List<CategoryEntity> getAll(){
         StringBuilder queryString = new StringBuilder("SELECT c FROM CategoryEntity AS c");
         Query query = getEntityManager().createQuery(queryString.toString());
-        return query.getResultList();
+        var rs =query.getResultList();
+        return rs;
+
     }
 }

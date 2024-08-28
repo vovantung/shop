@@ -1,9 +1,9 @@
 package txu.shop.dto;
+
 import lombok.Getter;
 
 @Getter
-public class UpdateOrderRequest {
+public class UpdateDeliveredRequest {
     String orderId;
-    String username;
+    Boolean delivered;
 }
-

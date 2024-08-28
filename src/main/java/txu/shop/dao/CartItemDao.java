@@ -14,7 +14,7 @@ public class CartItemDao extends BaseDao<CartItemEntity> {
 
     @Transactional
     public CartItemEntity save(CartItemEntity cartItemEntity) {
-        if (StringUtils.isNullOrEmpty(cartItemEntity.getId())) {
+        if (cartItemEntity.getId().getProductEntity().getId() == null && cartItemEntity.getId().getUserEntity().getId() ==null) {
             persist(cartItemEntity);
             return cartItemEntity;
         } else {
@@ -22,10 +22,10 @@ public class CartItemDao extends BaseDao<CartItemEntity> {
         }
     }
 
-    @Override
-    public CartItemEntity findById(Object Id) {
-        return super.findById(Id);
-    }
+//    @Override
+//    public CartItemEntity findById(Object Id) {
+//        return super.findById(Id);
+//    }
 
     @Transactional
     public void remove(CartItemEntity cartItemEntity) {
@@ -35,8 +35,8 @@ public class CartItemDao extends BaseDao<CartItemEntity> {
 
     @Transactional
     public CartItemEntity getByUerIdProductId(String userId, String productId){
-        StringBuilder queryString = new StringBuilder("SELECT ci FROM CartItemEntity AS ci WHERE userId=:userId AND productId=:productId");
-        Query query = getEntityManager().createQuery(queryString.toString());
+        String queryString = "SELECT ci FROM CartItemEntity AS ci WHERE ci.id.userEntity.id =:userId AND ci.id.productEntity.id =:productId";
+        Query query = getEntityManager().createQuery(queryString);
         query.setParameter("userId", userId);
         query.setParameter("productId", productId);
         return getSingle(query);
@@ -44,18 +44,27 @@ public class CartItemDao extends BaseDao<CartItemEntity> {
 
     @Transactional
     public List<CartItemEntity> getByUerId(String userId){
-        StringBuilder queryString = new StringBuilder("SELECT ci FROM CartItemEntity AS ci WHERE userId=:userId");
-        Query query = getEntityManager().createQuery(queryString.toString());
+        String queryString = "SELECT ci FROM CartItemEntity AS ci WHERE ci.id.userEntity.id=:userId";
+        Query query = getEntityManager().createQuery(queryString);
         query.setParameter("userId", userId);
         return query.getResultList();
     }
 
     @Transactional
     public int deleteByUserId(String userId){
-        StringBuilder queryString = new StringBuilder("DELETE FROM CartItemEntity AS ci WHERE userId=:userId");
-        Query query = getEntityManager().createQuery(queryString.toString());
+        String queryString = "DELETE FROM CartItemEntity AS ci WHERE ci.id.userEntity.id =:userId";
+        Query query = getEntityManager().createQuery(queryString);
         query.setParameter("userId", userId);
         var rs = query.executeUpdate();
         return rs;
+    }
+
+    @Transactional
+    public int deleteByUserIdAndProductId(String userId, String productId){
+        String queryString = "DELETE FROM CartItemEntity AS ci WHERE ci.id.userEntity.id=:userId AND ci.id.productEntity.id=:productId";
+        Query query = getEntityManager().createQuery(queryString);
+        query.setParameter("userId", userId);
+        query.setParameter("productId", productId);
+        return query.executeUpdate();
     }
 }

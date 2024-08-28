@@ -1,0 +1,29 @@
+{
+  "containerDefinitions": [
+    {
+      "name": "container-app1",
+      "image": "211125364313.dkr.ecr.ap-southeast-1.amazonaws.com/app1:latest",
+      "memory": 128,
+      "cpu": 100,
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 0,
+          "protocol": "tcp",
+          "containerPort": 8080
+        }
+      ]
+    }
+  ],
+  "family": "App1ServiceTask",
+  "compatibilities": [
+    "EXTERNAL",
+    "EC2"
+  ],
+  "requiresCompatibilities":[
+    "EC2"
+  ],
+  "networkMode":null,
+  "cpu":"256",
+  "memory":"256"
+}

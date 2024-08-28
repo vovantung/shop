@@ -3,7 +3,7 @@ package txu.shop.dto;
 import lombok.Getter;
 
 @Getter
-public class PlaceOrderRequest {
-    String username;
+public class UpdateNoteRequest {
+    String orderId;
     String note;
 }
